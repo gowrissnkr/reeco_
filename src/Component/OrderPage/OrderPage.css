@@ -1,0 +1,15 @@
+.order-confirm {
+    padding-top: 60px;
+    margin-bottom: 60px;
+    text-align: center;
+  }
+  .order-confirm img {
+    height: 300px;
+  }
+  .order-confirm h2 {
+    margin-top: 60px;
+  }
+  .order-confirm p {
+    margin-top: 10px;
+  }
+  
