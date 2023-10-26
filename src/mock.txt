@@ -1,0 +1,45 @@
+Product List :
+ <>
+            <Section>
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableData></TableData>
+                            <TableData>Product Name</TableData>
+                            <TableData >Brand</TableData>
+                            <TableData >Price</TableData>
+                            <TableData >Quantity</TableData>
+                            <TableData >Total</TableData>
+                            <TableData >Status</TableData>
+                            <TableData></TableData>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {item?.map((product) => (
+                            <TableRow key={product.id}>
+                                <TableData>
+                                    <Image src={product.images} />
+                                </TableData>
+                                <TableData>{product.title}</TableData>
+                                <TableData>{product.description}</TableData>
+                                <TableData>{product.price}</TableData>
+                                <TableData>{product.quantity && product.quantity}</TableData>
+                                <TableData>{product.price * product.quantity}</TableData>
+                                <TableData>{product.status && product.status}</TableData>
+                                <TableData>
+                                    <TableDataActions>
+                                        <button onClick={() => { handleChange(product.id, "Approved") }}> <i className="fa fa-check" aria-hidden="true"></i></button>
+                                        <button onClick={() => { handleChange(product.id, "Missing-Urgent") }}> <i className="fa fa-times" aria-hidden="true"></i></button>
+                                        <button onClick={() => { handleEdit(product.id) }}>Edit</button>
+                                    </TableDataActions>
+                                </TableData>
+                            </TableRow >
+                        ))}
+                    </TableBody>
+                </Table>
+
+            </Section>
+            <ModalPage
+                open={openModal}
+                onClose={() => setOpenModal(false)} />
+        </>
