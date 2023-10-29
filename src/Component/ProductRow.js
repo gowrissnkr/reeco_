@@ -12,7 +12,6 @@ const Image = styled.img`
 
 const TableData = styled.td`
     font-size: 14px;
-    color: #808080;
     line-height: 1.4;
     width: 265px;
     padding-left: 42px;
@@ -25,18 +24,34 @@ display:flex;
 justify-content:space-evenly;
 `
 
-const ProductRow = ({ product, onStatusChange, onEdit }) => {
+const ProductRow = ({ product, statusChange, onEdit }) => {
+  const { status } = product;
+
+  const onStatusChange = (newStatus) => {
+    if (newStatus === "Missing-Urgent") {
+        const confirmation = window.confirm(
+          "Are you sure you want to change the status to Missing-Urgent?"
+        );
+  
+        if (confirmation) {
+          statusChange(newStatus);
+        }
+      } else {
+        statusChange(newStatus);
+      }
+    }
+
     return (
       <TableRow>
-        <TableData>
-          <Image src={product.images} />
+        <TableData status = {status && status}>
+          <Image src={product.image} />
         </TableData>
         <TableData>{product.title}</TableData>
         <TableData>{product.description}</TableData>
         <TableData>{product.price}</TableData>
         <TableData>{product.quantity && product.quantity}</TableData>
         <TableData>{product.price * product.quantity}</TableData>
-        <TableData>{product.status && product.status}</TableData>
+        <TableData>{product.status && product.status}</TableData>      
         <TableData>
           <TableDataActions>
             <button onClick={() => onStatusChange("Approved")}>

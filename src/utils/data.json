@@ -8,7 +8,7 @@
       "status": false,
       "category": "Fruits",
       "quantity": 1,
-      "images": "https://drive.google.com/file/d/17wMahGnqw9yQx4NBi9BEFHjlqRUmv4ZV/view?usp=drive_link"
+      "image": "/Assets/Avocado Hass.jpg"
     },
     {
       "id": 2,
@@ -18,7 +18,7 @@
       "status": false,
       "category": "Fruits",
       "quantity": 2,
-      "images": "https://drive.google.com/file/d/17wMahGnqw9yQx4NBi9BEFHjlqRUmv4ZV/view?usp=drive_link"
+      "image": "/Assets/Avocado Hass.jpg"
     }
   ]
 }

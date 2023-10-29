@@ -4,64 +4,72 @@ import styled from "styled-components";
 import { updateProduct } from "../features/itemSlice";
 
 const ModalContainer = styled.div`
-    position: fixed;
-    width: 100%;
-    height: 100%;
-`
+  display: ${props => (props.open ? 'block' : 'none')};
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+`;
 
 const ModalWrapper = styled.div`
-max-width: 600px;
-  width: 100%;
-  position: fixed;
-  top: 40%;
+  background-color: #fefefe;
+  border: 1px solid #888;
+  width: 400px;
+  position: absolute;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  display: flex;
-  background-color: #ffffff;
-  box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 0.75);
-  border-radius: 8px;
-`
+  padding: 20px;
+`;
+
+const CloseButton = styled.span`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+`;
+
 const Image = styled.img`
-width: 250px;
-object-fit: cover;
-border-top-left-radius: 8px;
-border-bottom-left-radius: 8px;
-`
-const ModelRight = styled.div`
-width: 100%;
-cursor:pointer;
-`
-const CloseButton = styled.p`
-position: fixed;
-  top: 8px;
-  right: 8px;
+  max-width: 100%;
+`;
 
-`
-
-const ModalContent = styled.div`
-display: flex;
-  flex-direction: column;
-  justify-content: center;
+const Title = styled.h2`
   text-align: center;
-  margin-top: 3rem;
-  padding: 1rem 2rem;
-`
+`;
 
-const ButtonContainer = styled.div`
-display: flex;
-padding: 1rem 1rem;
-`
+const Label = styled.label`
+  display: block;
+  margin-top: 10px;
+`;
 
-const Button = styled.button`
-width: 100%;
-  margin: .5rem;
-  padding: 16px 0;
-  border: 1px solid #411b57;
-  background-color: #411b57;
-  color: white;
-  cursor:pointer;
-`
-const ModalPage = ({ open, onClose , setLoader}) => {
+const Input = styled.input`
+  width: 100%;
+  padding: 5px;
+  margin-top: 5px;
+`;
+
+const Total = styled.p`
+  font-weight: bold;
+`;
+
+const SaveButton = styled.button`
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+`;
+
+const CancelButton = styled.button`
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+`;
+const ModalPage = ({ open, onClose }) => {
 
     const editProduct = useSelector((state) => state.itemReducer.editProduct[0]);
 
@@ -84,44 +92,41 @@ const ModalPage = ({ open, onClose , setLoader}) => {
         return null
     };
 
-    const handleProductUpdate = () => {
-        setLoader(true)
+    const handleProductUpdate = () => {       
         console.log(productId)
         dispatch(updateProduct({ productId, price, quantity }))
-        setLoader(false)
         onClose()
     }
 
     
 
     return (
-        <ModalContainer onClick={onClose}>
-            <ModalWrapper
-                onClick={(e) => {
-                    e.stopPropagation();
-                }}
-            >
-                <Image src={editProduct.images} alt='/' />
-                <ModelRight>
-                    <CloseButton onClick={onClose}>
-                        X
-                    </CloseButton>
-                    <ModalContent>
-                        <span>Price $<input type="text" value={price } name="price" onChange={(e) => { setPrice(e.target.value) }} /></span>
-                        <span>Quantity<input type="text" value={quantity } name="quantity" onChange={(e) => { setQuantity(e.target.value) }} /></span>
-                        <p>Total : {price * quantity}</p>
-                    </ModalContent>
-                    <ButtonContainer>
-                        <Button onClick={onClose}>
-                           Cancel
-                        </Button>
-                        <Button onClick={handleProductUpdate}>
-                            Save
-                        </Button>
-                    </ButtonContainer>
-                </ModelRight>
-            </ModalWrapper>
-        </ModalContainer>
+        <ModalContainer open={open}>
+        <ModalWrapper onClick={(e) => e.stopPropagation()}>
+          <CloseButton onClick={onClose}>&times;</CloseButton>
+          <Image src={editProduct.image} alt="Product Image" />
+          <Title>Product Title</Title>
+          <Label htmlFor="price">Price:</Label>
+          <Input
+            type="text"
+            id="price"
+            placeholder="Enter price"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+          />
+          <Label htmlFor="quantity">Quantity:</Label>
+          <Input
+            type="text"
+            id="quantity"
+            placeholder="Enter quantity"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+          />
+          <Total>Total: {price * quantity}</Total>
+          <SaveButton onClick={handleProductUpdate}>Save</SaveButton>
+          <CancelButton onClick={onClose}>Cancel</CancelButton>
+        </ModalWrapper>
+      </ModalContainer>
     );
 }
 

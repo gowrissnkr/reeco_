@@ -54,7 +54,7 @@ const TableData = styled.td`
 
 
 
-const ProductList = ({setLoader}) => {
+const ProductList = () => {
     const { item } = useSelector(state => state.itemReducer)
     const [openModal, setOpenModal] = useState(false);
 
@@ -65,6 +65,7 @@ const ProductList = ({setLoader}) => {
         setOpenModal(true)
         dispatch(handleEditProduct(productId))
     }
+
 
     return (
         <>
@@ -87,7 +88,7 @@ const ProductList = ({setLoader}) => {
                             <ProductRow
                                 key={product.id}
                                 product={product}
-                                onStatusChange={(status) => {
+                                statusChange={(status) => {
                                     dispatch(handleStatusChange({ id: product.id, status }));
                                 }}
                                 onEdit={() => handleEdit(product.id)}
@@ -96,7 +97,7 @@ const ProductList = ({setLoader}) => {
                     </TableBody>
                 </Table>
             </Section>
-            <ModalPage open={openModal} setLoader={setLoader} onClose={() => setOpenModal(false)} />
+            <ModalPage open={openModal} onClose={() => setOpenModal(false)} />
         </>
     )
 }
